@@ -1,0 +1,83 @@
+{
+    "rules": {
+        "stats": {
+            ".read": "auth != null",
+            ".write": "auth != null"
+        },
+        "errors": {
+            ".read": "root.child('trainers').child(auth.uid).child('roles').child('admin').val() === true",
+            ".write": true
+        },
+        "bc": {
+            ".write": "newData.exists() && (root.child('trainers').child(auth.uid).child('roles').child('admin').val() === true || root.child('clients').child(newData.child('clientId').val()).child('trainers').child(auth.uid).val() === true)",
+            ".read": "auth != null",
+            ".indexOn": [
+                "clientId"
+            ],
+            "$bcId": {
+                ".read": "root.child('trainers').child(auth.uid).child('roles').child('admin').val() === true || data.child('created').child('user').val() === auth.uid",
+                ".validate": "!data.exists() ? newData.hasChildren(['clientId']) : true"
+            }
+        },
+        "bcm": {
+            ".write": "newData.exists() && (root.child('trainers').child(auth.uid).child('roles').child('admin').val() === true || root.child('clients').child(newData.child('clientId').val()).child('trainers').child(auth.uid).val() === true)",
+            ".read": "auth != null",
+            ".indexOn": [
+                "clientId"
+            ],
+            "$bcmId": {
+                ".read": "root.child('trainers').child(auth.uid).child('roles').child('admin').val() === true || data.child('created').child('user').val() === auth.uid",
+                ".validate": "!data.exists() ? newData.hasChildren(['clientId']) : true"
+            }
+        },
+        "clients": {
+            ".read": "auth != null",
+            ".write": "newData.exists() && auth != null",
+            ".indexOn": [
+                "trainers"
+            ],
+            "$clientId": {
+                ".read": "root.child('trainers').child(auth.uid).child('roles').child('admin').val() === true || data.child('trainers').child(auth.uid).val() === true",
+                ".write": "root.child('trainers').child(auth.uid).child('roles').child('admin').val() === true || (data.child('trainers').child(auth.uid).val() === true && newData.exists())",
+                ".validate": "data.exists() ? newData.hasChildren(['email', 'active']) : true",
+                ".indexOn": [
+                    "trainers"
+                ]
+            }
+        },
+        "trainers": {
+            ".read": "root.child('trainers').child(auth.uid).child('roles').child('admin').val() === true",
+            ".indexOn": [
+                "active", "clients"
+            ],
+            "$trainerId": {
+                ".validate": "data.exists() ? newData.hasChildren(['email', 'active']) : true",
+                ".read": "root.child('trainers').child(auth.uid).child('roles').child('admin').val() === true || $trainerId === auth.uid",
+                ".write": "auth != null && (newData.exists() || $trainerId === auth.uid)",
+                "email": {
+                    ".validate": "newData.val().length > 8 && ((data.exists() ? data.val() === newData.val() : newData.exists()) || ($trainerId === auth.uid) || (root.child('trainers').child(auth.uid).child('roles').child('admin').val() === true))"
+                },
+                "roles": {
+                    "admin": {
+                        ".validate": "newData.isBoolean() && (newData.val() === false || (newData.val() === true && root.child('trainers').child(auth.uid).child('roles').child('admin').val() === true))"
+                    }
+                },
+                ".indexOn": [
+                    "clients"
+                ]
+            }
+        },
+        "weight": {
+            ".write": "newData.exists() && (root.child('trainers').child(auth.uid).child('roles').child('admin').val() === true || root.child('clients').child(newData.child('clientId').val()).child('trainers').child(auth.uid).val() === true)",
+            ".validate": "!data.exists() ? newData.hasChildren(['clientId']) : true",
+            ".read": "auth != null",
+            ".indexOn": [
+                "clientId"
+            ],
+            "$weightId": {
+                ".read": "root.child('trainers').child(auth.uid).child('roles').child('admin').val() === true || data.child('created').child('user').val() === auth.uid",
+                ".validate": "data.exists() ? newData.hasChildren(['clientId']) : true"
+            }
+        }
+    }
+}

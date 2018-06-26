@@ -1,0 +1,21 @@
+<div data-collapse-nav>
+    <div class="nav-wrapper">
+        <ul id="nav"
+            class="nav"
+            data-slim-scroll>
+            <!--<li ui-sref-active="active"><a href data-ui-sref="app.dashboard"><i class="ti-home"></i><span>Dashboard</span></a></li>-->
+            <li ui-sref-active="active" data-ng-if="model.trainer.loggedInTrainer.roles.admin"><a href data-ui-sref="app.trainers"><i class="ti-check-box"></i><span>Trainers</span></a></li>
+            <li ui-sref-active="active"><a href data-ui-sref="app.clients"><i class="ti-user"></i><span>Clients</span></a></li>
+            <li ui-sref-active="active"><a href data-ui-sref="app.measurements"><i class="ti-ruler"></i><span>Measurements</span></a></li>
+        </ul>
+    </div>
+    <footer id="copyright" class="navbar navbar-fixed-bottom help-block">
+        {{model.copyright}} &copy; Zento Studios<br/>
+        Version: {{model.version}}
+        <span data-ng-if="model.debug">
+            <br/>Built: {{model.timestamp}}
+            <br/>Env: {{model.env}}
+            <br/>Builder: {{model.builtBy}}
+        </span>
+    </footer>
+</div>

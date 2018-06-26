@@ -1,0 +1,99 @@
+<div class="page page-profile">
+
+    <header class="profile-header">
+        <div class="profile-img">
+            <img alt="" src="{{model.trainer.loggedInTrainer.photo.url}}" class="img-circle">
+        </div>
+
+
+        <div class="profile-name text-capitalize">
+            {{model.trainer.loggedInTrainer.firstName}} {{model.trainer.loggedInTrainer.lastName}}
+            <br/>
+            <button class="btn btn-info" data-ng-click="editProfile()">Edit Profile</button>
+        </div>
+
+        <!--<div class="profile-social">
+            <a href="javascript:;" class="btn-icon btn-icon-round btn-facebook"><i class="ti-facebook"></i></a>
+            <a href="javascript:;" class="btn-icon btn-icon-round btn-twitter"><i class="ti-twitter"></i></a>
+            <a href="javascript:;" class="btn-icon btn-icon-round btn-instagram"><i class="ti-instagram"></i></a>
+        </div>-->
+    </header>
+
+
+    <div class="row row-eq-height">
+        <div class="col-sm-6 col-md-3">
+            <div class="panel mini-box">
+                <span class="btn-icon btn-icon-round btn-icon-lg-alt bg-success">
+                    <i class="ti-user"></i>
+                </span>
+                <div class="box-info">
+                    <p class="size-h2">{{clients.length}}</p>
+                    <p class="text-muted">Clients</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-3">
+            <div class="panel mini-box">
+                <span class="btn-icon btn-icon-round btn-icon-lg-alt bg-info">
+                    <i class="ti-ruler"></i>
+                </span>
+                <div class="box-info">
+                    <p class="size-h2">{{bodyCompositionMeasurements.length}}</p>
+                    <p class="text-muted">Measurements Taken</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-3">
+            <div class="panel mini-box">
+                <span class="btn-icon btn-icon-round btn-icon-lg-alt bg-info">
+                    <i class="ti-ruler"></i>
+                </span>
+                <div class="box-info">
+                    <p class="size-h2">{{clientAverageAge | number : 0}}</p>
+                    <p class="text-muted">Average Client Age</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-3">
+            <div class="panel mini-box">
+                <span class="btn-icon btn-icon-round btn-icon-lg-alt bg-info">
+                    <i class="ti-calendar"></i>
+                </span>
+                <div class="box-info">
+                    <p class="text-muted">Member Since</p>
+                    <p class="size-h2">{{model.trainer.loggedInTrainer.created.timestamp | amCalendar}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="ui-timline-container">
+        <section class="ui-timeline" data-ng-repeat="day in days">
+            <article class="tl-item">
+                <div class="tl-body">
+                    <div class="tl-entry">
+                        <div class="tl-caption">
+                            <div class="btn btn-primary btn-block">{{day.label}}</div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            <article class="tl-item" data-ng-repeat="event in day.events" data-ng-class="{'alt': $even}">
+                <div class="tl-body">
+                    <div class="tl-entry">
+                        <div class="tl-time">{{event.$daysSince}}</div>
+                        <div class="tl-icon btn-icon-round btn-icon btn-icon-thin" data-ng-class="{'btn-info':event.$type==='MEASURE_CLIENT','btn-success':event.$type==='NEW_CLIENT'}">
+                            <i data-ng-class="{'ti-ruler':event.$type==='MEASURE_CLIENT','ti-user':event.$type==='NEW_CLIENT'}"></i>
+                        </div>
+                        <div class="tl-content">
+                            <h4 class="tl-tile text-primary">{{(event.$type === 'NEW_CLIENT') ? 'Added New Client' : 'Added New Measurement'}}</h4>
+                            <p data-ng-show="(event.$type === 'NEW_CLIENT')">You added {{event.$firstNameLastName}} as one of your clients</p>
+                            <p data-ng-show="(event.$type === 'MEASURE_CLIENT')">You added a measurement for {{event.$client.$firstNameLastName}}</p>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </section>
+    </div>
+
+</div>

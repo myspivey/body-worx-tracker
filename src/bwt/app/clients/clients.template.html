@@ -1,0 +1,127 @@
+<div class="page page-table">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading"><strong><i class="ti-user"></i> Clients</strong></div>
+
+        <div class="table-filters">
+            <div class="row">
+                <div class="col-sm-3 col-xs-3">
+                    <a href data-ng-click="addClient()" class="btn btn-success btn-gap btn-w-lg">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        &nbsp;&nbsp;Add Client
+                    </a>
+                </div>
+                <div class="col-sm-5 col-xs-9 filter-result-info">
+                    <span class="pull-right">
+                        Showing {{currentPageClients.length}}/{{clients.length}} entries&nbsp;&nbsp;
+                    </span>
+                </div>
+                <div class="col-sm-4">
+                    <input type="text"
+                           placeholder="Search..."
+                           class="form-control pull-right"
+                           data-ng-model="searchKeywords"
+                           data-ng-keyup="search()">
+                </div>
+            </div>
+        </div>
+
+        <table class="table table-bordered table-striped table-responsive table-hover">
+            <thead>
+            <tr>
+                <th>
+                    <div class="th">
+                        Name
+                        <span class="fa fa-angle-up"
+                              data-ng-click=" order('$lastNameFirstName') "
+                              data-ng-class="{active: row == '$lastNameFirstName'}"></span>
+                        <span class="fa fa-angle-down"
+                              data-ng-click=" order('-$lastNameFirstName') "
+                              data-ng-class="{active: row == '-$lastNameFirstName'}"></span>
+                    </div>
+                </th>
+                <th>
+                    <div class="th">
+                        Email
+                        <span class="fa fa-angle-up"
+                              data-ng-click=" order('email') "
+                              data-ng-class="{active: row == 'email'}"></span>
+                        <span class="fa fa-angle-down"
+                              data-ng-click=" order('-email') "
+                              data-ng-class="{active: row == '-email'}"></span>
+                    </div>
+                </th>
+                <th>
+                    <div class="th">
+                        Birthday
+                        <span class="fa fa-angle-up"
+                              data-ng-click=" order('birthday') "
+                              data-ng-class="{active: row == 'birthday'}"></span>
+                        <span class="fa fa-angle-down"
+                              data-ng-click=" order('-birthday') "
+                              data-ng-class="{active: row == '-birthday'}"></span>
+                    </div>
+                </th>
+                <th>
+                    <div class="th">
+                        Sex
+                        <span class="fa fa-angle-up"
+                              data-ng-click=" order('sex') "
+                              data-ng-class="{active: row == 'sex'}"></span>
+                        <span class="fa fa-angle-down"
+                              data-ng-click=" order('-sex') "
+                              data-ng-class="{active: row == '-sex'}"></span>
+                    </div>
+                </th>
+                <th>
+                    <div class="th">
+                        Active
+                        <span class="fa fa-angle-up"
+                              data-ng-click=" order('active') "
+                              data-ng-class="{active: row == 'active'}"></span>
+                        <span class="fa fa-angle-down"
+                              data-ng-click=" order('-active') "
+                              data-ng-class="{active: row == '-active'}"></span>
+                    </div>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr data-ng-repeat="client in currentPageClients" data-ng-click="editClient(client)" href>
+                <td>{{client.$lastNameFirstName}}</td>
+                <td>{{client.email}}</td>
+                <td>{{client.$birthdayFormatted}}</td>
+                <td>{{client.sex}}</td>
+                <td>{{client.active}}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show&nbsp;
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()">
+                        </select>
+                        &nbsp;entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <ul uib-pagination
+                        class="pagination-sm"
+                        ng-model="currentPage"
+                        total-items="filteredClients.length"
+                        max-size="4"
+                        ng-change="selectPage(currentPage)"
+                        items-per-page="numPerPage"
+                        rotate="false"
+                        previous-text="&lsaquo;" next-text="&rsaquo;"
+                        first-text="&laquo;" last-text="&raquo;"
+                        boundary-links="true"></ul>
+                </div>
+            </div>
+        </footer>
+    </section>
+</div>

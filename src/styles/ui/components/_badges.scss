@@ -1,0 +1,32 @@
+// .badge {
+//     font-weight: 300;
+// }
+
+.badge-primary {
+    background-color: $brand-primary;
+}
+
+.badge-success {
+    background-color: $brand-success;
+}
+
+.badge-info {
+    background-color: $brand-info;
+}
+
+.badge-warning {
+    background-color: $brand-warning;
+}
+
+.badge-danger {
+    background-color: $brand-danger;
+}
+
+.status {
+    vertical-align: middle;
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    border: 0.15em solid $bright;
+    border-radius: 50%;
+}

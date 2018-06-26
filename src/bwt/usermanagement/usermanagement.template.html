@@ -1,0 +1,70 @@
+<div class="page-forgot">
+
+    <div class="signin-header">
+        <section class="logo text-center white-text">
+            <h1>{{model.title}}</h1>
+            <h3 data-ng-if="requestResetPassword">Request Password Reset</h3>
+            <h3 data-ng-if="resetPassword">Password Reset</h3>
+            <h3 data-ng-if="recoverEmail">Email Recovery</h3>
+        </section>
+    </div>
+
+    <div class="form-container">
+        <div class="form-container text-center" data-ng-show="disabled">
+            <p>{{errorMsg}}</p>
+        </div>
+        <div class="form-container text-center" data-ng-hide="disabled">
+            <form class="form-horizontal" name="forgotPasswordForm" data-ng-submit="sendPasswordReset()" data-ng-show="requestResetPassword">
+                <div class="form-group">
+                    <div class="input-group input-group-first">
+                        <span class="input-group-addon">
+                            <span class="ti-email"></span>
+                        </span>
+                        <input type="email"
+                               class="form-control input-lg"
+                               placeholder="Email"
+                               ng-model="email">
+                    </div>
+                </div>
+
+                <div class="divider divider-lg"></div>
+                <div class="form-group">
+                    <button class="btn btn-lg btn-block btn-primary" type="submit">Request Password Reset</button>
+                    <a data-ui-sref="login" class="white-text pull-right mt-10">Back to Login</a>
+                </div>
+            </form>
+
+            <form class="form-horizontal" data-ng-submit="completeResetPassword()" data-ng-show="resetPassword">
+                <div class="form-group">
+                    <p class="form-control-static">{{email}}</p>
+                </div>
+                <div class="form-group">
+                    <div class="input-group input-group-first">
+                        <span class="input-group-addon">
+                            <span class="ti-lock"></span>
+                        </span>
+                        <input class="form-control input-lg" id="loginPassword" type="password" placeholder="Password" ng-model="password">
+                    </div>
+                </div>
+
+                <div class="divider divider-lg"></div>
+                <div class="form-group">
+                    <button class="btn btn-lg btn-block btn-primary" type="submit">Update Password</button>
+                    <a data-ui-sref="login" class="white-text pull-right mt-10">Back to Login</a>
+                </div>
+            </form>
+
+
+            <div data-ng-show="recoverEmail">
+                <div class="form-group">
+                    <p class="form-control-static">Email reset to {{email}}</p>
+                </div>
+                <div class="divider divider-lg"></div>
+                <div class="form-group">
+                    <button class="btn btn-lg btn-block btn-primary" data-ng-click="sendPasswordReset()">Reset Password</button>
+                    <a data-ui-sref="login" class="white-text pull-right mt-10">Back to Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

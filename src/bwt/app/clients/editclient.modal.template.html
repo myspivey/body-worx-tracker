@@ -1,0 +1,83 @@
+<div class="modal-header">
+    <h3>{{title}}</h3>
+</div>
+<div class="modal-body">
+    <form class="form-horizontal form-validation" name="editForm" novalidate>
+        <fieldset>
+            <div class="form-group">
+                <label for="editEmail">Email</label>
+                <div class="input-group input-group-first">
+                    <span class="input-group-addon">
+                        <span class="ti-email"></span>
+                    </span>
+                    <input type="email" id="editEmail"
+                           class="form-control"
+                           placeholder="example@gmail.com"
+                           data-ng-model="client.email"
+                           required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text"
+                       class="form-control"
+                       placeholder="First Name"
+                       data-ng-model="client.firstName"
+                       required>
+                <br/>
+                <input type="text"
+                       id="lastNameInput"
+                       class="form-control"
+                       placeholder="Last Name"
+                       data-ng-model="client.lastName"
+                       required>
+            </div>
+            <div class="form-group">
+                <label for="birthdayDatePicker">Birthday</label>
+                <div class="input-group ui-datepicker">
+                    <span class="input-group-addon" ng-click="openBirthdayPopup()"><i class="ti-calendar"></i></span>
+                    <input type="text"
+                           id="birthdayDatePicker"
+                           class="form-control"
+                           uib-datepicker-popup="MM-dd-yyyy"
+                           ng-model="client.birthday"
+                           is-open="birthdayPopup.opened"
+                           datepicker-options="dateOptions"
+                           close-text="Close"
+                           required/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Gender</label>
+                <div class="input-group">
+                    <label class="ui-radio"><input name="sexRadio" type="radio" value="Male" data-ng-model="client.sex"><span>Male</span></label>
+                    <label class="ui-radio"><input name="sexRadio" type="radio" value="Female" data-ng-model="client.sex"><span>Female</span></label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2" data-ng-if="client.photo.reference !== ''">
+                    <img src="{{client.photo.url}}" alt="" class="img-circle img64_64"></div>
+                <div class="col-xs-10">
+                    <div class="form-group">
+                        <input type="file" title="Choose Client Photo" data-ui-file-upload class="btn-info mb-5"
+                               accept="image/*" onchange="angular.element(this).scope().clientPhotoSelect(this)"><br/>
+                        <button class="btn btn-danger" data-ng-click="photoDelete()" data-ng-show="client.photo.reference !== ''">Delete Photo</button>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="activeCB">Active?</label><br/>
+                <label class="ui-switch ui-switch-success ui-switch-lg"><input type="checkbox" id="activeCB" data-ng-model="client.active"><i></i></label>
+            </div>
+        </fieldset>
+    </form>
+</div>
+<div class="modal-footer">
+    <div class="pull-left" data-ng-if="!newClient">
+        <span>Created: {{client.created.timestamp | amCalendar}}</span><br/>
+        <span>Modified: {{client.modified.timestamp | amCalendar}}</span>
+    </div>
+    <label class="label label-danger" data-ng-show="client.$deletePhoto">Photo will be removed on save</label>
+    <button class="btn btn-primary" data-ng-click="save()" type="submit" data-ng-disabled="!editForm.$valid">Save</button>
+    <button class="btn btn-warning" data-ng-click="cancel()">Cancel</button>
+</div>

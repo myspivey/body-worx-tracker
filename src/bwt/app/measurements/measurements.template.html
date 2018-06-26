@@ -1,0 +1,140 @@
+<div class="page page-table">
+    <div class="col-lg-3">
+        <section class="panel panel-default table-dynamic">
+            <div class="panel-heading"><strong><i class="ti-user"></i> Clients</strong></div>
+
+            <div class="table-filters">
+                <form>
+                    <input type="text"
+                           placeholder="Search..."
+                           class="form-control"
+                           data-ng-model="searchKeywords"
+                           data-ng-keyup="search()">
+                </form>
+            </div>
+
+            <table class="table table-bordered table-striped table-responsive table-hover">
+                <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            Name
+                        </div>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr data-ng-repeat="client in filteredClients" href data-ng-click="selectClient(client)">
+                    <td>{{client.$lastNameFirstName}}</td>
+                </tr>
+                </tbody>
+            </table>
+            <footer class="table-footer help-block text-center">Total Clients: {{clients.length}}</footer>
+        </section>
+        <button class="btn btn-warning toast-bottom-full-width mb-20" data-ng-click="clearClient()" data-ng-show="selectedClient">Clear Selection</button>
+    </div>
+    <div class="col-lg-9" data-ng-show="selectedClient">
+        <section class="panel panel-box">
+            <div class="panel-top" ng-class="{ 'bg-dark': ['11','31'].indexOf(model.style.skin) >= 0,
+                     'bg-white': model.style.skin === '21',
+                     'bg-primary': ['12','22','32'].indexOf(model.style.skin) >= 0,
+                     'bg-success': ['13','23','33'].indexOf(model.style.skin) >= 0,
+                     'bg-info-alt': ['14','24','34'].indexOf(model.style.skin) >= 0,
+                     'bg-warning': ['15','25','35'].indexOf(model.style.skin) >= 0,
+                     'bg-danger': ['16','26','36'].indexOf(model.style.skin) >= 0,
+                    }">
+                <button class="btn btn-dark" ng-class="{ 'btn-dark': ['11','31'].indexOf(model.style.skin) < 0,
+                     'bg-primary': ['11','31'].indexOf(model.style.skin) >= 0,
+                    }" data-ng-click="addMeasurement()">
+                    <span class="glyphicon glyphicon-plus"></span>
+                    &nbsp;&nbsp;Add Measurement
+                </button>
+                <div class="text-center">
+                    <h3>{{selectedClient.$firstNameLastName}}</h3>
+                </div>
+                <div class="divider divider-xl"></div>
+                <div class="divider divider-lg"></div>
+            </div>
+            <div class="panel-img">
+                <img alt="" src="{{selectedClient.photo.url}}" class="img-circle">
+            </div>
+            <div class="list-justified-container" data-ng-show="composition.length > 0">
+                <div class="col-lg-6">
+                    <ul class="list-justified text-center">
+                        <li>
+                            <p class="size-h3">{{latestCompositionMeasurement.created.timestamp | amCalendar}}</p>
+                            <p class="text-muted">Latest Measurement</p>
+                        </li>
+                        <li>
+                            <p class="size-h3">{{latestWeightMeasurement.weight}} lbs</p>
+                            <p class="text-muted">Latest Weight</p>
+                        </li>
+                        <li>
+                            <p class="size-h3">{{latestComposition.percentFat | number:2}}%</p>
+                            <p class="text-muted">Latest Fat Percentage</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-6">
+                    <ul class="list-justified text-center">
+                        <li>
+                            <p class="size-h3">{{latestComposition.rating}}</p>
+                            <p class="text-muted">Latest Rating</p>
+                        </li>
+                        <li>
+                            <p class="size-h3">{{averageWeight | number:2}} lbs</p>
+                            <p class="text-muted">Average Weight</p>
+                        </li>
+                        <li>
+                            <p class="size-h3">{{averageFatPercentage | number:2}}%</p>
+                            <p class="text-muted">Average Fat Percentage</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="col-lg-9 col-lg-push-3" data-ng-show="selectedClient && composition.length > 0">
+        <section class="panel panel-default">
+            <div class="panel-heading"><strong><i class="ti-image"></i> Graph</strong></div>
+            <div class="panel-body">
+                <div data-echarts data-options="measurementGraph.config" style="height: 400px;" hover-callback="eConsole(event, second)" mouseout-callback="eConsole(event, second)"></div>
+            </div>
+        </section>
+    </div>
+    <div class="col-lg-9 col-lg-push-3" data-ng-show="selectedClient && composition.length > 0">
+        <section class="panel panel-default ">
+            <div class="panel-heading"><strong><i class="ti-ruler"></i> Measurements</strong></div>
+            <div class="panel-body">
+                <!--<section class="table-flip-scroll" data-slim-scroll data-scroll-height="400px">-->
+                <section class="table-flip-scroll">
+                    <table class="table table-striped cf">
+                        <thead class="cf">
+                        <tr>
+                            <th>Date</th>
+                            <th>Weight</th>
+                            <th>Fat Percentage</th>
+                            <th>Rating</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr data-ng-repeat="measurement in measurementsCombined" data-ng-click="editMeasurement(measurement)" href>
+                            <td>{{measurement.created.timestamp | amDateFormat:'MM-D-YY, h:mm a'}}</td>
+                            <td>{{measurement.$weight.weight}}</td>
+                            <td>{{measurement.$composition.percentFat | number:2}}%</td>
+                            <td><span class="label"
+                                      data-ng-class="{'label-success': (measurement.$composition.rating === 'Excellent' || measurement.$composition.rating === 'Good'),
+                                      'label-primary': (measurement.$composition.rating === 'Average'),
+                                      'label-warning': (measurement.$composition.rating === 'Fair'),
+                                      'label-danger': (measurement.$composition.rating === 'Poor')}">
+                                {{measurement.$composition.rating}}
+                            </span></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+        </section>
+    </div>
+</div>
+</div>

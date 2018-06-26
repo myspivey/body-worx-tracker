@@ -1,0 +1,139 @@
+<div class="modal-header">
+    <h3>{{title}}</h3>
+</div>
+<div class="modal-body">
+    <form class="form-horizontal form-validation" name="editForm" novalidate>
+        <fieldset>
+            <div class="row">
+                <div class="col-sm-5">
+                    <div class="form-group">
+                        <label for="editWeight">Weight</label>
+                        <div class="input-group">
+                            <input type="number" id="editWeight"
+                                   class="form-control"
+                                   data-ng-model="measurement.$weight.weight"
+                                   required>
+                            <span class="input-group-addon">lb</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-2"></div>
+                <div class="col-sm-5">
+                    <div class="form-group">
+                        <label for="editTriceps">Triceps</label>
+                        <div class="input-group">
+                            <input type="number" id="editTriceps"
+                                   class="form-control"
+                                   data-ng-model="measurement.triceps"
+                                   required>
+                            <span class="input-group-addon">mm</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-5">
+                    <div class="form-group">
+                        <label for="editPectoral">Pectoral</label>
+                        <div class="input-group">
+                            <input type="number" id="editPectoral"
+                                   class="form-control"
+                                   data-ng-model="measurement.pectoral"
+                                   required>
+                            <span class="input-group-addon">mm</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-2"></div>
+                <div class="col-sm-5">
+                    <div class="form-group">
+                        <label for="editMidaxilla">Midaxilla</label>
+                        <div class="input-group">
+                            <input type="number" id="editMidaxilla"
+                                   class="form-control"
+                                   data-ng-model="measurement.midaxilla"
+                                   required>
+                            <span class="input-group-addon">mm</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-5">
+                    <div class="form-group">
+                        <label for="editSubscapula">Subscapula</label>
+                        <div class="input-group">
+                            <input type="number" id="editSubscapula"
+                                   class="form-control"
+                                   data-ng-model="measurement.subscapula"
+                                   required>
+                            <span class="input-group-addon">mm</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-2"></div>
+                <div class="col-sm-5">
+                    <div class="form-group">
+                        <label for="editAbdomen">Abdomen</label>
+                        <div class="input-group">
+                            <input type="number" id="editAbdomen"
+                                   class="form-control"
+                                   data-ng-model="measurement.abdomen"
+                                   required>
+                            <span class="input-group-addon">mm</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-5">
+                    <div class="form-group">
+                        <label for="editSuprailiac">Suprailiac</label>
+                        <div class="input-group">
+                            <input type="number" id="editSuprailiac"
+                                   class="form-control"
+                                   data-ng-model="measurement.suprailiac"
+                                   required>
+                            <span class="input-group-addon">mm</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-2"></div>
+                <div class="col-sm-5">
+                    <div class="form-group">
+                        <label for="editQuadriceps">Quadriceps</label>
+                        <div class="input-group">
+                            <input type="number" id="editQuadriceps"
+                                   class="form-control"
+                                   data-ng-model="measurement.quadriceps"
+                                   required>
+                            <span class="input-group-addon">mm</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="editComment">Comments</label>
+                <textarea id="editComment" class="form-control" rows="4" data-ng-model="measurement.comments"></textarea>
+            </div>
+
+
+            <div data-ng-if="!newMeasurement">
+                <div class="form-group">
+                    <label>Created: </label>
+                    <span>{{measurement.created.timestamp | amCalendar}}</span>
+                </div>
+                <div class="form-group">
+                    <label>Modified: </label>
+                    <span>{{measurement.modified.timestamp | amCalendar}}</span>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" data-ng-click="save()" type="submit" data-ng-disabled="!editForm.$valid">Save</button>
+    <button class="btn btn-warning" data-ng-click="cancel()">Cancel</button>
+</div>

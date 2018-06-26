@@ -1,0 +1,36 @@
+/**
+ * Spacing classes
+ *
+ * Used to override styles on components without need for
+ * additional modifier classes
+ *
+ * Usage:
+ *  <div class="mt-20"> // margin-top: 20px
+ */
+
+/**
+ * Vertical
+ */
+
+$size-property-map: (
+    m: margin,
+    mt: margin-top,
+    mr: margin-right,
+    mb: margin-bottom,
+    ml: margin-left,
+    p: padding,
+    pt: padding-top,
+    pr: padding-right,
+    pb: padding-bottom,
+    pl: padding-left
+);
+$sizes-list: 0 5 10 15 20 25 30;
+
+@each $size in $sizes-list {
+    $val: $size + 0px;
+    @each $keyword, $property in $size-property-map {
+        .#{$keyword}-#{$size} {
+            #{$property}: $val !important;
+        }
+    }
+}

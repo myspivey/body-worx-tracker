@@ -1,0 +1,189 @@
+<!doctype html>
+<!--[if lt IE 8]>
+<html class="no-js lt-ie8"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Body Worx Tracker</title>
+    <meta name="description" content="Helping Trainers Track Thier Clients">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+    <!--BEGIN FAVICON-->
+    <link rel="apple-touch-icon" sizes="57x57" href="/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/favicon/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <!--END FAVICON-->
+
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,400,600,300,700' rel='stylesheet' type='text/css'>
+
+    <!-- build:css({.tmp,src}) /styles/icons.min.css -->
+    <link rel="stylesheet" href="/bower_components/themify-icons/css/themify-icons.css" />
+    <link rel="stylesheet" href="/bower_components/font-awesome/css/font-awesome.min.css">
+    <!-- endbuild -->
+
+
+    <!-- build:css({.tmp,src}) /styles/vendor.min.css -->
+    <link rel="stylesheet" href="/styles/bootstrap.css">
+    <link rel="stylesheet" href="/styles/ui.css">
+    <!-- endbuild -->
+
+    <!-- build:css({.tmp,src}) /styles/bwt.min.css -->
+    <link rel="stylesheet" href="/styles/main.css">
+    <!-- endbuild -->
+
+    <base href="/">
+
+</head>
+<body data-ng-app="bwt"
+      id="app"
+      class="app"
+      data-custom-page
+      data-off-canvas-nav>
+
+<!--[if lt IE 9]>
+<div class="lt-ie9-bg">
+    <p class="browsehappy">You are using an <strong>outdated</strong> browser.</p>
+    <p>Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+</div>
+<![endif]-->
+
+<section id="header"
+         class="header-container"
+         data-ng-include=" 'bwt/nav/header.template.html' "
+         data-ng-show="model.trainer.loggedIn"
+         data-ng-class="{ 'header-fixed': model.style.fixedHeader,
+                                  'bg-white': ['11','12','13','14','15','16','21'].indexOf(model.style.skin) >= 0,
+                                  'bg-dark': admin.skin === '31',
+                                  'bg-primary': ['22','32'].indexOf(model.style.skin) >= 0,
+                                  'bg-success': ['23','33'].indexOf(model.style.skin) >= 0,
+                                  'bg-info-alt': ['24','34'].indexOf(model.style.skin) >= 0,
+                                  'bg-warning': ['25','35'].indexOf(model.style.skin) >= 0,
+                                  'bg-danger': ['26','36'].indexOf(model.style.skin) >= 0
+                 }">
+</section>
+
+<div class="main-container">
+    <aside id="nav-container"
+           class="nav-container"
+           data-ng-include=" 'bwt/nav/sidebar.template.html' "
+           data-ng-show="model.trainer.loggedIn"
+           data-ng-class="{ 'nav-fixed': model.style.fixedSidebar,
+                                    'nav-horizontal': model.style.menu === 'horizontal',
+                                    'nav-vertical': model.style.menu === 'vertical',
+                                    'bg-white': ['31','32','33','34','35','36'].indexOf(model.style.skin) >= 0,
+                                    'bg-dark': ['31','32','33','34','35','36'].indexOf(model.style.skin) < 0
+                   }">
+    </aside>
+
+    <div id="content" class="content content-container">
+        <section class="view-container animate-fade-up" ui-view></section>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.16.6/lodash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stacktrace.js/1.3.1/stacktrace.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.5.2/firebase.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular-aria.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular-animate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.1/angular-ui-router.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angularFire/2.1.0/angularfire.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angulartics/1.3.0/angulartics.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angulartics-google-analytics/0.3.0/angulartics-ga.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.0/angular-moment.min.js"></script>
+
+<!-- build:js /scripts/vendor.min.js -->
+<script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+<script src="/bower_components/toastr/toastr.min.js"></script>
+<script src="/bower_components/jquery.slimscroll/jquery.slimscroll.min.js"></script>
+<script src="/bower_components/angular-loading-bar/build/loading-bar.min.js"></script>
+<script src="/bower_components/angular-scroll/angular-scroll.min.js"></script>
+
+<script src="/bower_components/textAngular/dist/textAngular-rangy.min.js"></script>
+<script src="/bower_components/textAngular/dist/textAngular-sanitize.min.js"></script>
+<script src="/bower_components/textAngular/dist/textAngular.min.js"></script>
+
+<script src="/bower_components/angular-translate/angular-translate.min.js"></script>
+<script src="/bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js"></script>
+
+<script src="/bower_components/ng-tags-input/ng-tags-input.min.js"></script>
+<script src="/bower_components/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js"></script>
+<script src="/bower_components/jquery-steps/build/jquery.steps.min.js"></script>
+<script src="/bower_components/bootstrap-file-input/bootstrap.file-input.js"></script>
+<script src="/bower_components/angular-validation-match/dist/angular-validation-match.min.js"></script>
+
+<script src="/vendors/echarts.js"></script>
+<script src="/vendors/ngecharts.js"></script>
+<!-- endbuild -->
+
+<!-- build:js({.tmp,src}) /scripts/bwt.min.js -->
+<!-- injector:js -->
+<script src="/bwt/app/app.module.js"></script>
+<script src="/bwt/app/clients/clients.module.js"></script>
+<script src="/bwt/app/dashboard/dashboard.module.js"></script>
+<script src="/bwt/app/measurements/measurements.module.js"></script>
+<script src="/bwt/app/profile/profile.module.js"></script>
+<script src="/bwt/app/trainers/trainers.module.js"></script>
+<script src="/bwt/bwt.module.js"></script>
+<script src="/bwt/core/core.module.js"></script>
+<script src="/bwt/errors/errors.module.js"></script>
+<script src="/bwt/login/login.module.js"></script>
+<script src="/bwt/nav/nav.module.js"></script>
+<script src="/bwt/usermanagement/usermanagement.module.js"></script>
+<script src="/bwt/utils/utils.module.js"></script>
+<script src="/bwt/core/firebaseDatabase.factory.js"></script>
+<script src="/bwt/core/firebaseStorage.factory.js"></script>
+<script src="/bwt/core/models/bodyCompositionModel.factory.js"></script>
+<script src="/bwt/core/models/clientModel.factory.js"></script>
+<script src="/bwt/core/models/model.factory.js"></script>
+<script src="/bwt/core/models/presenceModel.factory.js"></script>
+<script src="/bwt/core/models/statsModel.factory.js"></script>
+<script src="/bwt/core/models/trainerModel.factory.js"></script>
+<script src="/bwt/core/objects/ClientsList.factory.js"></script>
+<script src="/bwt/core/objects/ClientsListItem.factory.js"></script>
+<script src="/bwt/core/objects/objects.factory.js"></script>
+<script src="/bwt/core/objects/TrainersList.factory.js"></script>
+<script src="/bwt/core/objects/TrainersListItem.factory.js"></script>
+<script src="/bwt/utils/Auth.factory.js"></script>
+<script src="/bwt/utils/exception.factory.js"></script>
+<script src="/bwt/utils/toastr.factory.js"></script>
+<script src="/bwt/app/clients/clients.controller.js"></script>
+<script src="/bwt/app/clients/editclient.modal.controller.js"></script>
+<script src="/bwt/app/dashboard/dashboard.controller.js"></script>
+<script src="/bwt/app/measurements/editmeasurement.modal.controller.js"></script>
+<script src="/bwt/app/measurements/measurements.controller.js"></script>
+<script src="/bwt/app/profile/editprofile.modal.controller.js"></script>
+<script src="/bwt/app/profile/profile.controller.js"></script>
+<script src="/bwt/app/trainers/edittrainer.modal.controller.js"></script>
+<script src="/bwt/app/trainers/trainers.controller.js"></script>
+<script src="/bwt/login/login.controller.js"></script>
+<script src="/bwt/usermanagement/usermanagement.controller.js"></script>
+<script src="/bwt/nav/collapsenav.directive.js"></script>
+<script src="/bwt/nav/togglenavcollapsedmin.directive.js"></script>
+<script src="/bwt/nav/toggleoffcanvas.directive.js"></script>
+<script src="/bwt/utils/page.directive.js"></script>
+<script src="/bwt/utils/slimscroll.directive.js"></script>
+<script src="/bwt/utils/uiFileUpload.directive.js"></script>
+<!-- endinjector -->
+<script src="/constants.js"></script>
+<!-- endbuild -->
+</body>
+</html>

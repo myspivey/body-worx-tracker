@@ -1,0 +1,18 @@
+{
+    "CONSTANTS": {
+        "env": "local",
+        "version": "<%= yeoman.version %>",
+        "timestamp": "<%= grunt.template.today('mm-d-yy, h:MM:ss TT') %>",
+        "builtBy": "<%= yeoman.username %>",
+        "siteUrl": "https://localhost:9009/",
+        "debug": true,
+        "title": "Body Worx Tracker Local"
+    },
+    "FIREBASE_CONFIG": {
+        "apiKey": "",
+        "authDomain": "",
+        "databaseURL": "",
+        "storageBucket": "",
+        "messagingSenderId": ""
+    }
+}

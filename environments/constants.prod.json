@@ -1,0 +1,18 @@
+{
+    "CONSTANTS": {
+        "env": "prod",
+        "version": "<%= yeoman.version %>",
+        "timestamp": "<%= grunt.template.today('mm-d-yy, h:MM:ss TT') %>",
+        "builtBy": "<%= yeoman.username %>",
+        "siteUrl": "",
+        "debug": false,
+        "title": "Body Worx Tracker"
+    },
+    "FIREBASE_CONFIG": {
+        "apiKey": "",
+        "authDomain": "",
+        "databaseURL": "",
+        "storageBucket": "",
+        "messagingSenderId": ""
+    }
+}
